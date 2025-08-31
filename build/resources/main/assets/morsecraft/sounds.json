@@ -1,0 +1,12 @@
+{
+  "telegraph_dot": {
+    "sounds": [
+      { "name": "morsecraft:telegraph/dot", "stream": false }
+    ]
+  },
+  "telegraph_dash": {
+    "sounds": [
+      { "name": "morsecraft:telegraph/dash", "stream": false }
+    ]
+  }
+}

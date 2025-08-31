@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Specification-Title: morsecraft
+Specification-Vendor: mr_fortuna
+Specification-Version: 1
+Implementation-Title: morsecraft
+Implementation-Version: 1.0.0
+Implementation-Vendor: mr_fortuna
+Implementation-Timestamp: 2025-08-31T19:17:48+0300
+
