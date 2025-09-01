@@ -102,9 +102,15 @@ public class TelegraphKeyBlockEntity extends BlockEntity {
         }
     }
 
-    public void appendSymbol(char c) {
-        if (c != '.' && c != '-') return;
-        sequence.append(c);
+    public void appendSymbol(char symbol) {
+        if (paperCount <= 0) return;
+
+        if (symbol == ' ') {
+            sequence.append(' ');
+        } else if (symbol == '/' || symbol == '.' || symbol == '-') {
+            sequence.append(symbol);
+        }
+
         setChanged();
     }
 

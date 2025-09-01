@@ -2,15 +2,19 @@ package com.mrfortuna.morsecraft.blocks;
 
 import com.mojang.logging.LogUtils;
 import com.mrfortuna.morsecraft.Morsecraft;
+import com.mrfortuna.morsecraft.gui.TelegraphKeyContainerProvider;
+import com.mrfortuna.morsecraft.gui.TelegraphKeyMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +30,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -53,58 +58,23 @@ public class TelegraphKeyBlock extends BaseEntityBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level level, BlockPos pos,
-                                          Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) return InteractionResult.sidedSuccess(true);
-
-        boolean isDash = player.isShiftKeyDown();
-        char symbol = isDash ? '-' : '.';
-
-        BlockEntity be = level.getBlockEntity(pos);
-        TelegraphKeyBlockEntity telegraph = TelegraphKeyBlockEntity.get(level, pos);
-        TelegraphKeyBlockEntity te = be instanceof TelegraphKeyBlockEntity ? (TelegraphKeyBlockEntity) be : null;
-
-        if (te != null) {
-            boolean ok = te.recordSymbol(level, pos, symbol);
-            if (telegraph != null && telegraph.getPaperCount() > 0) {
-                if (!state.getValue(POWERED)) {
-                    level.setBlock(pos, state.setValue(POWERED, Boolean.TRUE), 3);
-                }
-                if (isDash) {
-                    level.playSound(null, pos, Morsecraft.TELEGRAPH_DASH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-                }
-                else {
-                    level.playSound(null, pos, Morsecraft.TELEGRAPH_DOT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-                }
-                level.scheduleTick(pos, this, isDash ? DASH_TICKS : DOT_TICKS);
-                level.updateNeighborsAt(pos, this);
-
-                player.displayClientMessage(
-                        Component.translatable("subtitles.morsecraft.telegraph_key.print")
-                                .append(Component.translatable(isDash ? "subtitles.morsecraft.telegraph_dash" : "subtitles.morsecraft.telegraph_dot"))
-                                .append(" (" + Component.translatable("subtitles.morsecraft.paper").getString() + " " + te.getPaperCount() + ")"),
-                        true
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+                                 Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!level.isClientSide) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof TelegraphKeyBlockEntity telegraph) {
+                NetworkHooks.openScreen((ServerPlayer) player,
+                        new SimpleMenuProvider(
+                                (windowId, inv, p) -> new TelegraphKeyMenu(windowId, inv, telegraph),
+                                Component.translatable("screen.morsecraft.telegraph_key")
+                        ),
+                        buf -> buf.writeBlockPos(pos) // 👈 обедать
                 );
-            } else {
-                player.displayClientMessage(Component.translatable("subtitles.morsecraft.telegraph_key.out"), true);
-                }
-        } else {
-            if (!state.getValue(POWERED)) {
-                level.setBlock(pos, state.setValue(POWERED, Boolean.TRUE), 3);
             }
-            if (isDash) {
-                level.playSound(null, pos, Morsecraft.TELEGRAPH_DASH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
-            else {
-                level.playSound(null, pos, Morsecraft.TELEGRAPH_DOT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
-            level.scheduleTick(pos, this, isDash ? DASH_TICKS : DOT_TICKS);
-            level.updateNeighborsAt(pos, this);
-            player.displayClientMessage(Component.translatable("subtitles.morsecraft.telegraph_key.be_err"), true);
         }
-
-        return InteractionResult.SUCCESS;
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
+
 
 
 

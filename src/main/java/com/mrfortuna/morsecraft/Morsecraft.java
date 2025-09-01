@@ -3,11 +3,18 @@ package com.mrfortuna.morsecraft;
 import com.mrfortuna.morsecraft.blocks.TelegraphKeyBlock;
 import com.mrfortuna.morsecraft.blocks.TelegraphKeyBlockEntity;
 import com.mrfortuna.morsecraft.crafting.ChargeTelegraphRecipe;
+import com.mrfortuna.morsecraft.gui.TelegraphKeyMenu;
 import com.mrfortuna.morsecraft.items.TelegraphBlockItem;
+import com.mrfortuna.morsecraft.gui.TelegraphKeyScreen;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.ForgeRegistries;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -45,6 +52,18 @@ public class Morsecraft {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Morsecraft.MODID);
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MODID);
+
+    public static final RegistryObject<MenuType<TelegraphKeyMenu>> TELEGRAPH_KEY_MENU =
+            CONTAINERS.register("telegraph_key_menu",
+                    () -> IForgeMenuType.create((windowId, inv, data) -> {
+                        BlockPos pos = data.readBlockPos();
+                        BlockEntity be = inv.player.level().getBlockEntity(pos);
+                        if (be instanceof TelegraphKeyBlockEntity telegraph) {
+                            return new TelegraphKeyMenu(windowId, inv, telegraph);
+                        }
+                        return null;
+                    }));
 
     public static final RegistryObject<SoundEvent> TELEGRAPH_DOT = SOUND_EVENTS.register("telegraph_dot",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Morsecraft.MODID, "telegraph_dot")));
@@ -93,6 +112,7 @@ public class Morsecraft {
         BLOCK_ENTITIES.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
         SOUND_EVENTS.register(modEventBus);
+        CONTAINERS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -113,9 +133,12 @@ public class Morsecraft {
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
-
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            MenuScreens.register(
+                    Morsecraft.TELEGRAPH_KEY_MENU.get(),
+                    TelegraphKeyScreen::new
+            );
             LOGGER.info("Mod loaded on client 200");
         }
     }
