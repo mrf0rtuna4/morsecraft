@@ -1,0 +1,115 @@
+﻿morsecraft
++-- .gradle
+|   +-- 8.8
+|   |   +-- checksums
+|   |   |   +-- checksums.lock
+|   |   |   +-- md5-checksums.bin
+|   |   |   \-- sha1-checksums.bin
+|   |   +-- dependencies-accessors
+|   |   |   \-- gc.properties
+|   |   +-- executionHistory
+|   |   |   +-- executionHistory.bin
+|   |   |   \-- executionHistory.lock
+|   |   +-- expanded
+|   |   |   \-- expanded.lock
+|   |   +-- fileChanges
+|   |   |   \-- last-build.bin
+|   |   +-- fileHashes
+|   |   |   +-- fileHashes.bin
+|   |   |   +-- fileHashes.lock
+|   |   |   \-- resourceHashesCache.bin
+|   |   +-- vcsMetadata
+|   |   \-- gc.properties
+|   +-- buildOutputCleanup
+|   |   +-- buildOutputCleanup.lock
+|   |   +-- cache.properties
+|   |   \-- outputFiles.bin
+|   +-- vcs-1
+|   |   \-- gc.properties
+|   \-- file-system.probe
++-- common
+|   +-- src
+|   |   +-- main
+|   |   |   +-- java
+|   |   |   |   \-- com
+|   |   |   |       \-- mrfortuna
+|   |   |   |           +-- morsecraft
+|   |   |   |           |   \-- utils
+|   |   |   |           |       \-- MorseDecoder.java
+|   |   |   |           \-- Main.java
+|   |   |   \-- resources
+|   |   \-- test
+|   |       +-- java
+|   |       \-- resources
+|   \-- build.gradle
++-- gradle
+|   \-- wrapper
+|       +-- gradle-wrapper.jar
+|       \-- gradle-wrapper.properties
++-- src
+|   +-- generated
+|   |   \-- resources
+|   +-- main
+|   |   +-- java
+|   |   |   \-- com
+|   |   |       \-- mrfortuna
+|   |   |           \-- morsecraft
+|   |   |               +-- blocks
+|   |   |               |   +-- TelegraphKeyBlock.java
+|   |   |               |   \-- TelegraphKeyBlockEntity.java
+|   |   |               +-- crafting
+|   |   |               |   \-- ChargeTelegraphRecipe.java
+|   |   |               +-- gui
+|   |   |               |   +-- TelegraphKeyContainerProvider.java
+|   |   |               |   +-- TelegraphKeyMenu.java
+|   |   |               |   \-- TelegraphKeyScreen.java
+|   |   |               +-- items
+|   |   |               |   +-- PaperTapeItem.java
+|   |   |               |   \-- TelegraphBlockItem.java
+|   |   |               \-- Morsecraft.java
+|   |   \-- resources
+|   |       +-- assets
+|   |       |   \-- morsecraft
+|   |       |       +-- blockstates
+|   |       |       |   +-- charge_telegraph.json
+|   |       |       |   \-- telegraph_key.json
+|   |       |       +-- lang
+|   |       |       |   +-- en_us.json
+|   |       |       |   \-- ru_ru.json
+|   |       |       +-- models
+|   |       |       |   +-- block
+|   |       |       |   |   \-- telegraph_key.json
+|   |       |       |   \-- item
+|   |       |       |       +-- paper_tape.json
+|   |       |       |       \-- telegraph_key.json
+|   |       |       +-- sounds
+|   |       |       |   \-- telegraph
+|   |       |       |       +-- dash.ogg
+|   |       |       |       \-- dot.ogg
+|   |       |       +-- textures
+|   |       |       |   +-- block
+|   |       |       |   |   \-- telegraph_key.png
+|   |       |       |   \-- item
+|   |       |       |       \-- paper_tape.png
+|   |       |       \-- sounds.json
+|   |       +-- data
+|   |       |   \-- morsecraft
+|   |       |       +-- loot_tables
+|   |       |       |   \-- blocks
+|   |       |       \-- recipes
+|   |       |           +-- charge_telegraph.json
+|   |       |           \-- telegraph_key.json
+|   |       +-- META-INF
+|   |       |   \-- mods.toml
+|   |       \-- pack.mcmeta
+|   \-- test
+|       +-- java
+|       \-- resources
++-- .gitignore
++-- build.gradle
++-- Export-Tree.ps1
++-- gradle.properties
++-- gradlew
++-- gradlew.bat
++-- README.md
+\-- settings.gradle

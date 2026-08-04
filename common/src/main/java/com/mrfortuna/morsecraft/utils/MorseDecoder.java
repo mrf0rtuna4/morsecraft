@@ -21,4 +21,3 @@ public class MorseDecoder {
         return result.toString().trim();
     }
 }
-

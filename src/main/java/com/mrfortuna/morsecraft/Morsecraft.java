@@ -29,9 +29,7 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -66,10 +64,10 @@ public class Morsecraft {
                     }));
 
     public static final RegistryObject<SoundEvent> TELEGRAPH_DOT = SOUND_EVENTS.register("telegraph_dot",
-            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Morsecraft.MODID, "telegraph_dot")));
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Morsecraft.MODID, "telegraph_dot")));
 
     public static final RegistryObject<SoundEvent> TELEGRAPH_DASH = SOUND_EVENTS.register("telegraph_dash",
-            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Morsecraft.MODID, "telegraph_dash")));
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Morsecraft.MODID, "telegraph_dash")));
 
     public static final RegistryObject<Block> TELEGRAPH_KEY = BLOCKS.register("telegraph_key",
             () -> new TelegraphKeyBlock(Block.Properties.of()
@@ -101,8 +99,8 @@ public class Morsecraft {
                 output.accept(PAPER_TAPE_ITEM.get());
             }).build());
 
-    public Morsecraft() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public Morsecraft(FMLJavaModLoadingContext context) {
+        IEventBus modEventBus = context.getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
 
@@ -115,9 +113,6 @@ public class Morsecraft {
         CONTAINERS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
-
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

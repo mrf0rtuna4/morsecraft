@@ -1,7 +1,7 @@
 package com.mrfortuna.morsecraft.gui;
 
-import com.mrfortuna.morsecraft.blocks.TelegraphKeyBlockEntity;
 import com.mrfortuna.morsecraft.Morsecraft;
+import com.mrfortuna.morsecraft.blocks.TelegraphKeyBlockEntity;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class TelegraphKeyScreen extends AbstractContainerScreen<TelegraphKeyMenu> {
 
     private static final ResourceLocation GUI_TEXTURE =
-            new ResourceLocation("morsecraft", "textures/gui/telegraph_key.png");
+            ResourceLocation.fromNamespaceAndPath(Morsecraft.MODID, "textures/gui/telegraph_key.png");
 
     public TelegraphKeyScreen(TelegraphKeyMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);

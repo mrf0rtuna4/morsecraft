@@ -1,15 +1,12 @@
 package com.mrfortuna.morsecraft.blocks;
 
 import com.mojang.logging.LogUtils;
-import com.mrfortuna.morsecraft.Morsecraft;
-import com.mrfortuna.morsecraft.gui.TelegraphKeyContainerProvider;
 import com.mrfortuna.morsecraft.gui.TelegraphKeyMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +28,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 public class TelegraphKeyBlock extends BaseEntityBlock {
@@ -74,9 +70,6 @@ public class TelegraphKeyBlock extends BaseEntityBlock {
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
-
-
-
 
 
     @Override
