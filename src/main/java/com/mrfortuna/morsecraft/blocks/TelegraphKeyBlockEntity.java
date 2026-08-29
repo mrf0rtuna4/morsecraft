@@ -2,6 +2,7 @@ package com.mrfortuna.morsecraft.blocks;
 
 import com.mrfortuna.morsecraft.Morsecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -14,9 +15,7 @@ public class TelegraphKeyBlockEntity extends BlockEntity {
     private int paperCount = 0;
     private final StringBuilder sequence = new StringBuilder();
     private long lastSignalGameTime = 0L;
-
     private int printedSymbols = 0;
-
     private ItemStack tape = ItemStack.EMPTY;
 
     public TelegraphKeyBlockEntity(BlockPos pos, BlockState state) {
@@ -66,17 +65,19 @@ public class TelegraphKeyBlockEntity extends BlockEntity {
         if (level == null || level.isClientSide) return;
         if (sequence.isEmpty()) return;
 
-        ItemStack tape = new ItemStack(Morsecraft.PAPER_TAPE_ITEM.get());
-        tape.getOrCreateTag().putString("sequence", sequence.toString());
-        // tape.setHoverName(Component.literal("Tape"));
+        ItemStack tapeItem = new ItemStack(Morsecraft.PAPER_TAPE_ITEM.get());
+        
+        // В 1.21.1 используем CustomData для хранения последовательности
+        CompoundTag customData = tapeItem.getOrCreateTag();
+        customData.putString("sequence", sequence.toString());
+        tapeItem.setTag(customData);
 
-        Block.popResource(level, pos, tape);
+        Block.popResource(level, pos, tapeItem);
 
         sequence.setLength(0);
         printedSymbols = 0;
         setChanged();
     }
-
 
     public void setTape(ItemStack stack) {
         this.tape = stack;

@@ -7,9 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.core.component.DataComponents;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class PaperTapeItem extends Item {
 
@@ -21,8 +20,11 @@ public class PaperTapeItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            if (stack.hasTag() && Objects.requireNonNull(stack.getTag()).contains("sequence")) {
-                String seq = stack.getTag().getString("sequence");
+            // В 1.21.1 NBT заменен на Data Components. 
+            // Используем CUSTOM_DATA для хранения последовательности.
+            String seq = stack.getOrDefault(DataComponents.CUSTOM_DATA, net.minecraft.nbt.CompoundTag.EMPTY).getString("sequence");
+            
+            if (!seq.isEmpty()) {
                 player.displayClientMessage(Component.translatable("subtitles.morsecraft.tape.sequence").append(seq), false);
             } else {
                 player.displayClientMessage(Component.translatable("subtitles.morsecraft.tape.empty"), false);
