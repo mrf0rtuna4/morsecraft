@@ -20,8 +20,6 @@ public class PaperTapeItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            // В 1.21.1 NBT заменен на Data Components. 
-            // Используем CUSTOM_DATA для хранения последовательности.
             String seq = stack.getOrDefault(DataComponents.CUSTOM_DATA, net.minecraft.nbt.CompoundTag.EMPTY).getString("sequence");
             
             if (!seq.isEmpty()) {

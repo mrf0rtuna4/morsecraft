@@ -28,7 +28,6 @@ public class TelegraphKeyScreen extends AbstractContainerScreen<TelegraphKeyMenu
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
-        // кнопки для ввода
         this.addRenderableWidget(Button.builder(Component.literal("."), b -> this.menu.inputSymbol('.', this.minecraft.player))
                 .pos(x + 10, y + 20).size(20, 20).build());
 

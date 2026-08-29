@@ -67,7 +67,6 @@ public class TelegraphKeyBlockEntity extends BlockEntity {
 
         ItemStack tapeItem = new ItemStack(Morsecraft.PAPER_TAPE_ITEM.get());
         
-        // В 1.21.1 используем CustomData для хранения последовательности
         CompoundTag customData = tapeItem.getOrCreateTag();
         customData.putString("sequence", sequence.toString());
         tapeItem.setTag(customData);
