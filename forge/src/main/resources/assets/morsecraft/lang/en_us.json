@@ -1,0 +1,16 @@
+{
+  "itemGroup.morsecraft_tab": "Morsecraft",
+  "creativetab.morsecraft_tab": "Morsecraft",
+  "block.morsecraft.telegraph_key": "Telegraph Key",
+  "item.morsecraft.telegraph_key": "Telegraph Key",
+  "item.morsecraft.paper_tape": "Paper Tape",
+  "subtitles.morsecraft.telegraph_dot": "dot",
+  "subtitles.morsecraft.telegraph_dash": "dash",
+  "subtitles.morsecraft.paper": "Paper: ",
+  "subtitles.morsecraft.tape": "Tape: ",
+  "subtitles.morsecraft.tape.sequence": "Paper Tape Sequence: ",
+  "subtitles.morsecraft.tape.empty": "Paper Tape is empty.",
+  "subtitles.morsecraft.telegraph_key.print": "Printed ",
+  "subtitles.morsecraft.telegraph_key.out": "Telegraph out of paper!",
+  "subtitles.morsecraft.telegraph_key.be_err": "BlockEntity missing - place a fresh Telegraph block."
+}

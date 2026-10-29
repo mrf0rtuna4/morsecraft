@@ -1,0 +1,17 @@
+{
+  "itemGroup.morsecraft_tab": "МорзеКрафт",
+  "creativetab.morsecraft_tab": "МорзеКрафт",
+  "block.morsecraft.telegraph_key": "Телеграфный ключ",
+  "item.morsecraft.telegraph_key": "Телеграфный ключ",
+  "item.morsecraft.paper_tape": "Бумажная лента",
+  "subtitles.morsecraft.telegraph_dot": "точка",
+  "subtitles.morsecraft.telegraph_dash": "тире",
+  "subtitles.morsecraft.paper": "Бумага: ",
+  "subtitles.morsecraft.tape": "Лента: ",
+  "subtitles.morsecraft.tape.sequence": "Последовательность бумажной ленты: ",
+  "subtitles.morsecraft.tape.empty": "Бумажная лента пуста.",
+  "subtitles.morsecraft.telegraph_key.print": "Печатает ",
+  "subtitles.morsecraft.telegraph_key.out": "В телеграфе закончилась бумага!",
+  "subtitles.morsecraft.telegraph_key.be_err": "BlockEntity не найден - поставьте новый блок Телеграфа."
+
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_authors}"
+  ],
+  "contact": {},
+  "license": "${mod_license}",
+  "icon": "assets/morsecraft/textures/item/telegraph_key.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.mrfortuna.morsecraft.FabricMorsecraft"
+    ],
+    "client": [
+      "com.mrfortuna.morsecraft.fabric.client.FabricClient"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {}
+}
