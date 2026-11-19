@@ -1,7 +1,7 @@
 package com.mrfortuna.morsecraft;
 
 import com.mrfortuna.morsecraft.api.PlatformApi;
-import com.mrfortuna.morsecraft.fabric.platform.FabricPlatform;
+import com.mrfortuna.morsecraft.platform.FabricPlatform;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 

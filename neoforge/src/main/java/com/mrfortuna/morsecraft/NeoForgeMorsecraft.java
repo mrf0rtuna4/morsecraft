@@ -1,7 +1,7 @@
 package com.mrfortuna.morsecraft;
 
 import com.mrfortuna.morsecraft.api.PlatformApi;
-import com.mrfortuna.morsecraft.neoforge.platform.NeoForgePlatform;
+import com.mrfortuna.morsecraft.platform.NeoForgePlatform;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;

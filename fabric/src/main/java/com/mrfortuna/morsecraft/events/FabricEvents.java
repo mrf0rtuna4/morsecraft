@@ -1,4 +1,4 @@
-package com.mrfortuna.morsecraft.fabric.events;
+package com.mrfortuna.morsecraft.events;
 
 import com.mrfortuna.morsecraft.FabricMorsecraft;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;

@@ -1,4 +1,4 @@
-package com.mrfortuna.morsecraft.forge.events;
+package com.mrfortuna.morsecraft.events;
 
 import com.mrfortuna.morsecraft.ForgeMorsecraft;
 import com.mojang.logging.LogUtils;

@@ -1,4 +1,4 @@
-package com.mrfortuna.morsecraft.neoforge.platform;
+package com.mrfortuna.morsecraft.platform;
 
 import com.mrfortuna.morsecraft.api.PlatformApi;
 import com.mrfortuna.morsecraft.blocks.TelegraphKeyBlock;

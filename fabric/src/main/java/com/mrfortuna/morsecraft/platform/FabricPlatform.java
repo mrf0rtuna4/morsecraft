@@ -1,4 +1,4 @@
-package com.mrfortuna.morsecraft.fabric.platform;
+package com.mrfortuna.morsecraft.platform;
 
 import com.mrfortuna.morsecraft.api.PlatformApi;
 import com.mrfortuna.morsecraft.blocks.TelegraphKeyBlock;
@@ -7,11 +7,12 @@ import com.mrfortuna.morsecraft.crafting.ChargeTelegraphRecipe;
 import com.mrfortuna.morsecraft.gui.TelegraphKeyMenu;
 import com.mrfortuna.morsecraft.items.PaperTapeItem;
 import com.mrfortuna.morsecraft.items.TelegraphBlockItem;
+import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.ByteBufUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.MenuProvider;
@@ -22,8 +23,10 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry.SimpleScreenHandlerFactory;
 
@@ -48,24 +51,24 @@ public class FabricPlatform implements PlatformApi.IPlatform {
                         .strength(1.0f)
                         .noOcclusion()
         );
-        Registries.BLOCK.register(id("telegraph_key"), TELEGRAPH_KEY_BLOCK);
+        Registry.register(Registries.BLOCK, id("telegraph_key"), TELEGRAPH_KEY_BLOCK);
 
         TELEGRAPH_KEY_ITEM = new TelegraphBlockItem(
                 TELEGRAPH_KEY_BLOCK,
                 new Item.Properties().stacksTo(1)
         );
-        Registries.ITEM.register(id("telegraph_key"), TELEGRAPH_KEY_ITEM);
+        Registry.register(Registries.ITEM, id("telegraph_key"), TELEGRAPH_KEY_ITEM);
 
         PAPER_TAPE_ITEM = new PaperTapeItem(
                 new Item.Properties().stacksTo(1)
         );
-        Registries.ITEM.register(id("paper_tape"), PAPER_TAPE_ITEM);
+        Registry.register(Registries.ITEM, id("paper_tape"), PAPER_TAPE_ITEM);
 
-        TELEGRAPH_KEY_ENTITY = net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.create(
+        TELEGRAPH_KEY_ENTITY = FabricBlockEntityTypeBuilder.create(
                 TelegraphKeyBlockEntity::new,
                 TELEGRAPH_KEY_BLOCK
         ).build(null);
-        Registries.BLOCK_ENTITY_TYPE.register(id("telegraph_key"), TELEGRAPH_KEY_ENTITY);
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, id("telegraph_key"), TELEGRAPH_KEY_ENTITY);
 
         MORSECRAFT_TAB = CreativeModeTab.builder()
                 .withTabsBefore(CreativeModeTabs.COMBAT)
@@ -75,20 +78,20 @@ public class FabricPlatform implements PlatformApi.IPlatform {
                     output.accept(TELEGRAPH_KEY_ITEM);
                     output.accept(PAPER_TAPE_ITEM);
                 }).build();
-        Registries.CREATIVE_MODE_TAB.register(id("morsecraft_tab"), MORSECRAFT_TAB);
+        Registry.register(Registries.CREATIVE_MODE_TAB, id("morsecraft_tab"), MORSECRAFT_TAB);
 
         CHARGE_TELEGRAPH_RECIPE = new net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer<>(ChargeTelegraphRecipe::new);
-        Registries.RECIPE_SERIALIZER.register(id("charge_telegraph"), CHARGE_TELEGRAPH_RECIPE);
+        Registry.register(Registries.RECIPE_SERIALIZER, id("charge_telegraph"), CHARGE_TELEGRAPH_RECIPE);
 
         TELEGRAPH_DOT = SoundEvent.createVariableRangeEvent(id("telegraph_dot"));
         TELEGRAPH_DASH = SoundEvent.createVariableRangeEvent(id("telegraph_dash"));
-        Registries.SOUND_EVENT.register(id("telegraph_dot"), TELEGRAPH_DOT);
-        Registries.SOUND_EVENT.register(id("telegraph_dash"), TELEGRAPH_DASH);
+        Registry.register(Registries.SOUND_EVENT, id("telegraph_dot"), TELEGRAPH_DOT);
+        Registry.register(Registries.SOUND_EVENT, id("telegraph_dash"), TELEGRAPH_DASH);
 
         TELEGRAPH_KEY_MENU = new MenuType<>(
                 (windowId, inv, data) -> {
                     BlockPos pos = data.readBlockPos();
-                    net.minecraft.world.level.block.entity.BlockEntity be = inv.player.level().getBlockEntity(pos);
+                    BlockEntity be = inv.player.level().getBlockEntity(pos);
                     if (be instanceof TelegraphKeyBlockEntity telegraph) {
                         return new TelegraphKeyMenu(windowId, inv, telegraph);
                     }
@@ -96,11 +99,11 @@ public class FabricPlatform implements PlatformApi.IPlatform {
                 },
                 null
         );
-        Registries.MENU_TYPE.register(id("telegraph_key_menu"), TELEGRAPH_KEY_MENU);
+        Registry.register(Registries.MENU_TYPE, id("telegraph_key_menu"), TELEGRAPH_KEY_MENU);
 
         ScreenHandlerRegistry.registerSync(id("telegraph_key_menu"), (SimpleScreenHandlerFactory) (syncId, inventory, data) -> {
             BlockPos pos = data.readBlockPos();
-            net.minecraft.world.level.block.entity.BlockEntity be = inventory.player.level().getBlockEntity(pos);
+            BlockEntity be = inventory.player.level().getBlockEntity(pos);
             if (be instanceof TelegraphKeyBlockEntity telegraph) {
                 return new TelegraphKeyMenu(syncId, inventory, telegraph);
             }
@@ -125,7 +128,7 @@ public class FabricPlatform implements PlatformApi.IPlatform {
 
     @Override
     public void openScreen(net.minecraft.server.level.ServerPlayer player, MenuProvider provider, BlockPos pos) {
-        FriendlyByteBuf buf = new FriendlyByteBuf(ByteBufUtils.DEFAULT);
+        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
         buf.writeBlockPos(pos);
         player.openHandledScreen(TELEGRAPH_KEY_MENU, buf);
     }

@@ -1,4 +1,4 @@
-package com.mrfortuna.morsecraft.forge.client;
+package com.mrfortuna.morsecraft.client;
 
 import com.mrfortuna.morsecraft.api.PlatformApi;
 import com.mrfortuna.morsecraft.ForgeMorsecraft;
